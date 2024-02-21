@@ -186,7 +186,7 @@ Adafruit_SSD1306 display1(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 Adafruit_SSD1306 display2(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 unsigned long previousMillis = 0;          // Variable to store the last time the function was called
-const unsigned long timeoutInterval = 400; // Timeout interval in milliseconds
+const unsigned long timeoutInterval = 500; // Timeout interval in milliseconds
 
 struct struct_game {
   uint8_t gameStage;
