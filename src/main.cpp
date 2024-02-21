@@ -185,8 +185,8 @@
 Adafruit_SSD1306 display1(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 Adafruit_SSD1306 display2(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
-unsigned long previousMillis = 0;           // Variable to store the last time the function was called
-const unsigned long timeoutInterval = 1000; // Timeout interval in milliseconds (5 seconds)
+unsigned long previousMillis = 0;          // Variable to store the last time the function was called
+const unsigned long timeoutInterval = 400; // Timeout interval in milliseconds
 
 struct struct_game {
   uint8_t gameStage;
@@ -239,14 +239,13 @@ void displayGotHit(int playerNum) {
     display = &display2;
   }
 
+  previousMillis = millis();
   display->clearDisplay();
   display->setTextSize(2);
   display->setTextColor(WHITE);
   display->setCursor(0, 10);
   display->println("Got Hit!" + String(playerNum));
   display->display();
-
-  previousMillis = millis();
 }
 
 void displayBlock(int playerNum) {
@@ -257,14 +256,13 @@ void displayBlock(int playerNum) {
     display = &display2;
   }
 
+  previousMillis = millis();
   display->clearDisplay();
   display->setTextSize(2);
   display->setTextColor(WHITE);
   display->setCursor(0, 10);
   display->println("Block!");
   display->display();
-
-  previousMillis = millis();
 }
 
 void displayWin(int playerNum) {
