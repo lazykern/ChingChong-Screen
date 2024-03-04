@@ -158,12 +158,6 @@ void setup() {
   Serial.println("ESP-NOW Receiver");
   Serial.print("MAC Address: ");
   Serial.println(WiFi.macAddress());
-  WiFi.mode(WIFI_STA);
-
-  if (esp_now_init() != ESP_OK) {
-    Serial.println("Error initializing ESP-NOW");
-    return;
-  }
 
   if (!display1.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
     Serial.println(F("SSD1306 allocation failed display1"));
@@ -177,9 +171,61 @@ void setup() {
       ;
   }
 
+  display1.clearDisplay();
+  display1.setTextSize(2);
+  display1.setTextColor(WHITE);
+  display1.setCursor(0, 10);
+  display1.println("Player 1");
+  display1.println("connecting...");
+  display1.display();
+
+  display2.clearDisplay();
+  display2.setTextSize(2);
+  display2.setTextColor(WHITE);
+  display2.setCursor(0, 10);
+  display2.println("Player 2");
+  display2.println("connecting...");
+  display2.display();
+
+  WiFi.mode(WIFI_STA);
+
+  if (esp_now_init() != ESP_OK) {
+    Serial.println("Error initializing ESP-NOW");
+    display1.clearDisplay();
+    display1.setTextSize(2);
+    display1.setTextColor(WHITE);
+    display1.setCursor(0, 10);
+    display1.println("Connection");
+    display1.println("failed");
+    display1.display();
+
+    display2.clearDisplay();
+    display2.setTextSize(2);
+    display2.setTextColor(WHITE);
+    display2.setCursor(0, 10);
+    display2.println("Connection");
+    display2.println("failed");
+    display2.display();
+    return;
+  }
+
   sleep(1);
 
-  esp_now_register_recv_cb(OnDataRecv);
+  display1.clearDisplay();
+  display1.setTextSize(2);
+  display1.setTextColor(WHITE);
+  display1.setCursor(0, 10);
+  display1.println("Connected!");
+  display1.display();
+
+  display2.clearDisplay();
+  display2.setTextSize(2);
+  display2.setTextColor(WHITE);
+  display2.setCursor(0, 10);
+  display2.println("Connected!");
+  display2.display();
+
+    esp_now_register_recv_cb(OnDataRecv);
 }
 
 void loop() {
